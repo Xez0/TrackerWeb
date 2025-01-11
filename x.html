@@ -355,12 +355,29 @@
         }
 
         try {
+          // Clear previous error messages
+          const errorTable = document.getElementById("error-table");
+          if (errorTable) {
+            errorTable.remove();
+          }
+
+          // Clear previous location data
+          const locationTable = document.getElementById("location-table");
+          if (locationTable) {
+            locationTable.innerHTML = `
+              <tr>
+                <th>Your Information</th>
+                <th>Detail</th>
+              </tr>
+            `;
+          }
+
           // Try to get IP address first as basic connectivity test
           const ipAddress = await getIPAddress();
 
           // If we get here, we have confirmed internet connectivity
           // Now initialize all data gathering functions
-          getUserLocation();
+          await getUserLocation();
           detectDeviceInfo();
           updateNetworkInfo();
           updateScreenInfo();
